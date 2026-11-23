@@ -1,6 +1,6 @@
 # Kitchen Studio Privacy Policy
 
-**Effective date:** 15 November 2026
+**Effective date:** 23 November 2026
 
 Kitchen Studio ("we", "us") is a personal cookbook app. This policy
 explains what happens to your information when you use the app.
@@ -45,6 +45,12 @@ account. Photos are kept in private storage and are not available at public web 
 - When you share a link or text to Kitchen Studio from another app, only what you share is passed
   to the app. When you share from Kitchen Studio, such as your grocery list, it goes through your
   phone's share sheet to the people and apps you choose.
+- When you send a recipe or cookbook **link** (you need to be signed in), a copy of what you
+  share is saved with your account so the link works: the recipe text, its web photo if it has
+  one, your first name and your cookbook's name and design. Your notes, memories and photos taken
+  on your phone are never included, and secret recipes are never in a cookbook link. **Anyone who
+  has the link can see what you shared**, on a web page or in the app. A shared cookbook link
+  stays up to date with your recipes. Shared copies are deleted when you delete your account.
 
 ## Camera and photos
 
