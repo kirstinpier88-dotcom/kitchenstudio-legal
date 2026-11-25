@@ -1,5 +1,6 @@
-# Cloudflare (Workers or Pages): share links look like /r/<code> and /c/<code>. Serve the share page for them
-# (status 200, the address stays the same so the page can read the code from it).
-/r/* /r/ 200
-/c/* /c/ 200
-# Not /r/index.html: Cloudflare ignores a rule that points a wildcard at an index page.
+# Cloudflare: a share link /r/<code> or /c/<code> opened in a browser goes to the share page with the
+# code in the address (/r/?t=<code>), which the page already reads. In the iPhone app the link opens
+# the app directly, so this only matters in a browser.
+# (Cloudflare refuses "rewrite to index.html" rules here as a possible loop, so this is a redirect.)
+/r/:code /r/?t=:code 302
+/c/:code /c/?t=:code 302
