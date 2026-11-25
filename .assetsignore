@@ -1,0 +1,8 @@
+# Files that are not part of the website.
+.git
+wrangler.jsonc
+.assetsignore
+README.md
+policy.md
+.wrangler
+.nojekyll
