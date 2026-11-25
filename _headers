@@ -1,0 +1,12 @@
+# Cloudflare Pages headers (ignored by GitHub Pages).
+/.well-known/apple-app-site-association
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
+/r/*
+  X-Robots-Tag: noindex, nofollow
+  Referrer-Policy: no-referrer
+
+/c/*
+  X-Robots-Tag: noindex, nofollow
+  Referrer-Policy: no-referrer

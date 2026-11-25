@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["46R2AQ9F6L.kitchenstudio.app"],
+        "components": [
+          { "/": "/r/*", "comment": "One shared recipe" },
+          { "/": "/c/*", "comment": "A shared cookbook" }
+        ]
+      }
+    ]
+  }
+}
