@@ -1,4 +1,5 @@
-# Cloudflare Pages: share links look like /r/<code> and /c/<code>. Serve the share page for them
+# Cloudflare (Workers or Pages): share links look like /r/<code> and /c/<code>. Serve the share page for them
 # (status 200, the address stays the same so the page can read the code from it).
-/r/* /r/index.html 200
-/c/* /c/index.html 200
+/r/* /r/ 200
+/c/* /c/ 200
+# Not /r/index.html: Cloudflare ignores a rule that points a wildcard at an index page.
