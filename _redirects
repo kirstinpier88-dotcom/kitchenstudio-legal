@@ -1,0 +1,4 @@
+# Cloudflare Pages: share links look like /r/<code> and /c/<code>. Serve the share page for them
+# (status 200, the address stays the same so the page can read the code from it).
+/r/* /r/index.html 200
+/c/* /c/index.html 200
