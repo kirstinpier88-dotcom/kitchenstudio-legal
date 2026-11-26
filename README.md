@@ -34,3 +34,13 @@ On an iPhone with Kitchen Studio installed, tapping a `https://kitchenstudioapp.
   `github.io` address.
 - The app side is `ios.associatedDomains` in the app repo's `app.json` and `SHARE_WEB_BASE` in
   `utils/share-links.ts`.
+
+## Link previews (worker.js)
+
+Messages and other chat apps build a link preview from the page's Open Graph tags without running
+its script. `worker.js` runs only for `/r/*` and `/c/*` (`run_worker_first` in `wrangler.jsonc`):
+it reads the share with the same public `get_share_link` call, then writes the recipe's name
+(or the cookbook's name and recipe count) and its main photo into `og:title`, `og:description`
+and `og:image`. A share that can't be read keeps the general preview. Answers are cached for 60
+seconds at the edge. Everything else (the policy, the Apple file, `share/`) is served straight
+from the files.

@@ -1,8 +1,13 @@
-// Cloudflare Workers settings for kitchenstudioapp.co: this repository is a plain static site.
+// Cloudflare Workers settings for kitchenstudioapp.co: a plain static site, plus worker.js for
+// share links only (/r/<code>, /c/<code>), which writes the recipe's name and photo into the
+// page so link previews in Messages show them. Every other address is served straight from the files.
 {
   "name": "kitchenstudio-legal",
   "compatibility_date": "2026-11-23",
+  "main": "worker.js",
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/r/*", "/c/*"]
   }
 }
