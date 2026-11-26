@@ -7,3 +7,4 @@ policy.md
 .wrangler
 .nojekyll
 worker.js
+.gitignore

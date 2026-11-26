@@ -1,6 +1,7 @@
-// Cloudflare Workers settings for kitchenstudioapp.co: a plain static site, plus worker.js for
-// share links only (/r/<code>, /c/<code>), which writes the recipe's name and photo into the
-// page so link previews in Messages show them. Every other address is served straight from the files.
+// Cloudflare Workers settings for kitchenstudioapp.co: a plain static site, plus worker.js, which
+// writes the recipe's name and photo into share pages (/r/<code>, /c/<code>) so link previews in
+// Messages show them. Every other address is handed straight to the files (env.ASSETS).
+// run_worker_first is a plain true/false: Cloudflare's builds use a Wrangler that refuses a list.
 {
   "name": "kitchenstudio-legal",
   "compatibility_date": "2026-11-23",
@@ -8,6 +9,6 @@
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
-    "run_worker_first": ["/r/*", "/c/*"]
+    "run_worker_first": true
   }
 }

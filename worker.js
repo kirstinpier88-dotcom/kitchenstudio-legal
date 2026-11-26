@@ -3,8 +3,7 @@
 // Messages, WhatsApp and the like build a link preview from the page's Open Graph tags, and they
 // don't run the page's script. So for /r/<code> and /c/<code> this small Worker reads the share
 // (the same public get_share_link call the page makes) and writes its name and main photo into
-// the page before sending it. Everything else on the site is served as plain files and never
-// reaches this code (wrangler.jsonc run_worker_first).
+// the page before sending it. Everything else on the site is passed straight to the plain files.
 //
 // If the share can't be read (stopped, unknown, no signal) the page goes out unchanged, with the
 // general "A recipe shared from Kitchen Studio" preview. Nothing is stored or tracked.
@@ -14,12 +13,44 @@
 const SUPABASE_URL = 'https://hkomjgcujhnuasrmbjxw.supabase.co';
 const PUBLISHABLE_KEY = 'sb_publishable_2FDMLyNUn3Wp8k77egZIyg_HGWnlWw0';
 
+// The file Apple reads to let links open the app. Served from .well-known/ as before; if that ever
+// fails, this copy (the same text) goes out instead, so universal links never break.
+const AASA_PATH = '/.well-known/apple-app-site-association';
+const AASA_COPY = {
+  applinks: {
+    details: [
+      {
+        appIDs: ['46R2AQ9F6L.kitchenstudio.app'],
+        components: [
+          { '/': '/r/*', comment: 'One shared recipe' },
+          { '/': '/c/*', comment: 'A shared cookbook' },
+        ],
+      },
+    ],
+  },
+};
+
+async function appleFile(request, env) {
+  const res = await env.ASSETS.fetch(request).catch(() => null);
+  if (res && res.ok) {
+    const headers = new Headers(res.headers);
+    headers.set('Content-Type', 'application/json');
+    return new Response(res.body, { status: 200, headers });
+  }
+  return new Response(JSON.stringify(AASA_COPY, null, 2) + '\n', {
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600' },
+  });
+}
+
 const SHARE_PATH = /^\/(r|c)\/([a-f0-9]{32})\/?$/;
 const PAGE_HEADERS = { 'X-Robots-Tag': 'noindex, nofollow', 'Referrer-Policy': 'no-referrer' };
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.pathname === AASA_PATH) return appleFile(request, env);
+    // Everything that isn't a share page: the plain files, exactly as before.
+    if (!/^\/(r|c)\//.test(url.pathname)) return env.ASSETS.fetch(request);
     const match = SHARE_PATH.exec(url.pathname);
     const letter = match ? match[1] : url.pathname.startsWith('/c/') ? 'c' : 'r';
     // The share page itself (r/index.html or c/index.html), whatever the code.
